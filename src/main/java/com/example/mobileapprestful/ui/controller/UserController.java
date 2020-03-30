@@ -1,5 +1,6 @@
 package com.example.mobileapprestful.ui.controller;
 
+import com.example.mobileapprestful.ui.model.request.UpdateUserDetailsRequestModel;
 import com.example.mobileapprestful.ui.model.request.UserDetailsRequestModel;
 import com.example.mobileapprestful.ui.model.response.UserRest;
 import org.springframework.http.HttpStatus;
@@ -55,9 +56,15 @@ public class UserController {
         return new ResponseEntity<>(returnValue, HttpStatus.OK);
     }
 
-    @PutMapping
-    public String updateUser() {
-        return "user is updated";
+    @PutMapping(path = "{userId}",
+            consumes = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE},
+            produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    public UserRest updateUser(@PathVariable String userId, @RequestBody UpdateUserDetailsRequestModel userDetails) {
+        UserRest storedUserDetails = users.get(userId);
+        storedUserDetails.setFirstName(userDetails.getFirstName());
+        storedUserDetails.setLastName(userDetails.getLastName());
+        users.put(userId, storedUserDetails);
+        return storedUserDetails;
     }
 
     @DeleteMapping
