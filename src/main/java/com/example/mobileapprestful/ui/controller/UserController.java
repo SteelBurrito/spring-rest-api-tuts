@@ -1,6 +1,7 @@
 package com.example.mobileapprestful.ui.controller;
 
 import com.example.mobileapprestful.ui.model.response.UserRest;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,7 +16,7 @@ public class UserController {
         return "Users are called from page " + page + " with limit " + limit + " and sort by " + sortBy;
     }
 
-    @GetMapping(path = "/{userId}")
+    @GetMapping(path = "/{userId}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public UserRest getUser(@PathVariable String userId) {
         UserRest returnValue = new UserRest();
         returnValue.setEmail("test@test.com");
