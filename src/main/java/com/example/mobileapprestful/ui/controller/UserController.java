@@ -1,7 +1,10 @@
 package com.example.mobileapprestful.ui.controller;
 
+import com.example.mobileapprestful.ui.model.request.UserDetailsRequestModel;
 import com.example.mobileapprestful.ui.model.response.UserRest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,17 +20,23 @@ public class UserController {
     }
 
     @GetMapping(path = "/{userId}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
-    public UserRest getUser(@PathVariable String userId) {
+    public ResponseEntity<UserRest> getUser(@PathVariable String userId) {
         UserRest returnValue = new UserRest();
         returnValue.setEmail("test@test.com");
         returnValue.setFirstName("Jevin");
         returnValue.setLastName("Kames");
-        return returnValue;
+        return new ResponseEntity<>(returnValue, HttpStatus.OK);
     }
 
-    @PostMapping
-    public String createUser() {
-        return "user is created";
+    @PostMapping(consumes = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE},
+            produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<UserRest> createUser(@RequestBody UserDetailsRequestModel userDetails) {
+        UserRest returnValue = new UserRest();
+        returnValue.setEmail(userDetails.getEmail());
+        returnValue.setFirstName(userDetails.getFirstName());
+        returnValue.setLastName(userDetails.getLastName());
+        returnValue.setEmail(userDetails.getEmail());
+        return new ResponseEntity<>(returnValue, HttpStatus.OK);
     }
 
     @PutMapping
