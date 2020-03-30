@@ -1,5 +1,6 @@
 package com.example.mobileapprestful.ui.controller;
 
+import com.example.mobileapprestful.ui.model.response.UserRest;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,8 +16,12 @@ public class UserController {
     }
 
     @GetMapping(path = "/{userId}")
-    public String getUser(@PathVariable String userId) {
-        return "User " + userId + " is called";
+    public UserRest getUser(@PathVariable String userId) {
+        UserRest returnValue = new UserRest();
+        returnValue.setEmail("test@test.com");
+        returnValue.setFirstName("Jevin");
+        returnValue.setLastName("Kames");
+        return returnValue;
     }
 
     @PostMapping
