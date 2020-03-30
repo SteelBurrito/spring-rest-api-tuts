@@ -56,7 +56,7 @@ public class UserController {
         return new ResponseEntity<>(returnValue, HttpStatus.OK);
     }
 
-    @PutMapping(path = "{userId}",
+    @PutMapping(path = "/{userId}",
             consumes = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public UserRest updateUser(@PathVariable String userId, @RequestBody UpdateUserDetailsRequestModel userDetails) {
@@ -67,8 +67,9 @@ public class UserController {
         return storedUserDetails;
     }
 
-    @DeleteMapping
-    public String deleteUser() {
-        return "user is deleted";
+    @DeleteMapping(path = "/{userId}")
+    public ResponseEntity<Void> deleteUser(@PathVariable String userId) {
+        users.remove(userId);
+        return ResponseEntity.noContent().build();
     }
 }
