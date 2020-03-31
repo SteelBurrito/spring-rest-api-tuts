@@ -1,5 +1,6 @@
 package com.example.mobileapprestful.ui.controller;
 
+import com.example.mobileapprestful.ui.exceptions.UserServiceException;
 import com.example.mobileapprestful.ui.model.request.UpdateUserDetailsRequestModel;
 import com.example.mobileapprestful.ui.model.request.UserDetailsRequestModel;
 import com.example.mobileapprestful.ui.model.response.UserRest;
@@ -30,6 +31,7 @@ public class UserController {
 
     @GetMapping(path = "/{userId}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<UserRest> getUser(@PathVariable String userId) {
+        if (true) throw new UserServiceException("User service exception thrown.");
         if (users.containsKey(userId))
             return new ResponseEntity<>(users.get(userId), HttpStatus.OK);
         else
