@@ -4,6 +4,9 @@ import com.example.mobileapprestful.ui.exceptions.UserServiceException;
 import com.example.mobileapprestful.ui.model.request.UpdateUserDetailsRequestModel;
 import com.example.mobileapprestful.ui.model.request.UserDetailsRequestModel;
 import com.example.mobileapprestful.ui.model.response.UserRest;
+import com.example.mobileapprestful.ui.userservice.UserService;
+import com.example.mobileapprestful.ui.userservice.impl.UserServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +22,9 @@ import java.util.UUID;
 public class UserController {
     //  Temporary user data storage here
     Map<String, UserRest> users;
+
+    @Autowired
+    UserService userService;
 
     @GetMapping
     //default value will make page parameter optional because a value will be assigned if there is none
@@ -43,18 +49,7 @@ public class UserController {
     @PostMapping(consumes = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<UserRest> createUser(@Valid @RequestBody UserDetailsRequestModel userDetails) {
-        UserRest returnValue = new UserRest();
-        returnValue.setEmail(userDetails.getEmail());
-        returnValue.setFirstName(userDetails.getFirstName());
-        returnValue.setLastName(userDetails.getLastName());
-        returnValue.setEmail(userDetails.getEmail());
-
-        String userId = UUID.randomUUID().toString();
-        returnValue.setUserId(userId);
-        if (users == null)
-            users = new HashMap<>();
-        users.put(userId, returnValue);
-
+        UserRest returnValue = userService.createUser(userDetails);
         return new ResponseEntity<>(returnValue, HttpStatus.OK);
     }
 
