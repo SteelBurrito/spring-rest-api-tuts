@@ -5,7 +5,6 @@ import com.example.mobileapprestful.ui.model.request.UpdateUserDetailsRequestMod
 import com.example.mobileapprestful.ui.model.request.UserDetailsRequestModel;
 import com.example.mobileapprestful.ui.model.response.UserRest;
 import com.example.mobileapprestful.ui.userservice.UserService;
-import com.example.mobileapprestful.ui.userservice.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -13,9 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("users") //http:localhost:8080/users
@@ -23,6 +20,7 @@ public class UserController {
     //  Temporary user data storage here
     Map<String, UserRest> users;
 
+    //  @Autowired injects UserService when UserController is created
     @Autowired
     UserService userService;
 
